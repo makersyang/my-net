@@ -235,20 +235,21 @@ span{
 	width:200px;
 	margin-top:20px;
 }
-.list-notes{
+.list-notes,.list-label{
 	width:100%;
 	border-radius:6px;
+	margin-bottom:20px;
 	box-shadow:0 0 5px #000;
 }
-.list-notes h4{
+.list-notes h4,.list-label h4{
 	line-height:30px;
 	text-indent:6px;
 }
-.list-notes li{
+.list-notes li,.list-label li{
 	width:100%;
 	font-size:16px;
 }
-.list-notes li a{
+.list-notes li a,.list-label li a{
 	display:block;
 	width:100%;
 	line-height:34px;
@@ -307,6 +308,12 @@ span{
 	stroke-width:10;
 	stroke-dasharray:33,24;
 }
-
+.list-label h4{
+	width:100%;
+	line-hieght:30px;
+}
+.list-label li{
+	line-height:20px;
+}
 
 /*------------笔记1的样式表开始---------*/

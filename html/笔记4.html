@@ -2,42 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>css3的图片轮播</title>
+	<title>笔记4</title>
 	<link rel="stylesheet" href="../css/index.css">
 	<link rel="stylesheet" href="../css/prople.css">
-	<style type="text/css">
-	.box{
-		float:left;
-		width:400px;
-		height:250px;
-		border:3px solid red;
-		background-image:url(../images/29.jpg);
-		background-size:400px 250px;
-		margin:6px;
-		background-repeat:no-repeat;
-		animation:run 10s infinite;
-	}
-	@keyframes run{
-		0%{background-image:url(../images/29.jpg);}
-		20%{background-image:url(../images/31.jpg);}
-		40%{background-image:url(../images/32.jpg);}
-		60%{background-image:url(../images/38.jpg);}
-		80%{background-image:url(../images/39.jpg);}
-		100%{background-image:url(../images/29.jpg);}
-	}
-	.box-code{
-		float:left;
-		width:540px;
-		height:250px;
-		margin-left:30px;
-		line-height:30px;
-		margin:6px;
-		background:#ccc;
-		overflow-y:auto;
-	}
+	<style>
+		body{margin-top:-23px;}
 	</style>
 </head>
 <body>
+	<!-- 首页的第一个模块开始 -->
 	<div class="header">
 		<div class="header-top">
 			<div class="header-box">
@@ -69,11 +42,11 @@
 						<a href="javaScript:;" href="javaScript:;"><span>笔记法则</span></a>
 						<div class="rule">
 							<ul class="son">
-								<li><a href="javaScript:;">笔记1</a></li>
-								<li><a href="javaScript:;">笔记2</a></li>
-								<li><a href="javaScript:;">笔记3</a></li>
-								<li><a href="javaScript:;">笔记4</a></li>
-								<li><a href="javaScript:;">笔记5</a></li>
+								<li><a href="./笔记1.html">笔记1</a></li>
+								<li><a href="./笔记2.html">笔记2</a></li>
+								<li><a href="./笔记3.html">笔记3</a></li>
+								<li><a href="./笔记4.html">笔记4</a></li>
+								<li><a href="./笔记5.html">笔记5</a></li>
 							</ul>
 						</div>
 					</li>
@@ -121,45 +94,69 @@
 		<!-- 顶部固定导航结束 -->
 	</div>
 	<div class="content">
-		<h5>您当前的位置是:首页 > 笔记法则 > 笔记1 > css3轮播图(有bug)</h5>
+		<h5>您当前的位置是:首页 > 笔记法则 > 笔记4</h5>
 		<div class="notes-content-left">
 			<ul class="list-notes">
 				<h4>最新笔记</h4>
-				<li><a href="./笔记1.html">css3的一些应用</a></li>
-				<li><a href="">h5的一些应用</a></li>
-				<li><a href="">h5的画布canvas</a></li>
-				<li><a href="">H5的智能拖拽运用</a></li>
-				<li><a href="">javaScript + css的案例</a></li>
+				<li><a href="./笔记1.html">笔记1: css3的一些应用</a></li>
+				<li><a href="./笔记2.html">笔记2: h5的画布canvas</a></li>
+				<li><a href="./笔记3.html">笔记3: H5的智能拖拽运用</a></li>
+				<li><a href="./笔记4.html">笔记4: h5的一些应用</a></li>
+				<li><a href="./笔记5.html">笔记5: 原生js+css的特效</a></li>
 			</ul>
-			<ul class="list-label"></ul>
+			<ul class="list-label">
+				<h4>最近评论</h4>
+				<li>111</li>
+				<li>222</li>
+				<li>3333</li>
+				<li>444</li>
+				<li>555</li>
+				<li>666</li>
+				<li>777</li>
+				<li>888</li>
+			</ul>
 		</div>
 		<div class="notes-content-right">
-			<div class='box'></div>
-			<div class="box-code">
-				代码展示：<br/>
-				.box{<br/>
-					float:left;<br/>
-					width:400px;<br/>
-					height:250px;<br/>
-					border:3px solid red;<br/>
-					background-image:url(../images/29.jpg);<br/>
-					background-size:400px 250px;<br/>
-					margin:10px auto;<br/>
-					background-repeat:no-repeat;<br/>
-					animation:run 10s infinite;<br/>
-				}<br/>
-				@keyframes run{<br/>
-					0%{background-image:url(../images/29.jpg);}<br/>
-					20%{background-image:url(../images/31.jpg);}<br/>
-					40%{background-image:url(../images/32.jpg);}<br/>
-					60%{background-image:url(../images/38.jpg);}<br/>
-					80%{background-image:url(../images/39.jpg);}<br/>
-					100%{background-image:url(../images/29.jpg);}<br/>
-				}<br/>
+			<div class="content-first"> 
+				<a href="./原生js拖拽照片墙.html">
+					<img src="../images/css.png" alt="">
+					<h2>属于我的音乐播放器</h2>
+					<span>我的音乐，我做主</span>
+					<svg width="100%" height="100%">
+						<line x1="0" y1="0" x2="280" y2="0" />
+						<line x1="0" y1="0" x2="0" y2="350" />
+						<line x1="0" y1="350" x2="280" y2="350" />
+						<line x1="280" y1="0" x2="280" y2="350" />
+					</svg>
+				</a>
+			</div>
+			<div class="content-first">
+				<a href="">
+					<img src="../images/css.png" alt="">
+					<h2>视频播放器的</h2>
+					<span>视频播放器</span>
+					<svg width="100%" height="100%">
+						<line x1="0" y1="0" x2="280" y2="0" />
+						<line x1="0" y1="0" x2="0" y2="350" />
+						<line x1="0" y1="350" x2="280" y2="350" />
+						<line x1="280" y1="0" x2="280" y2="350" />
+					</svg>
+				</a>
+			</div>
+			<div class="content-first"> 
+				<a href="./canvas星空缓慢旋转背景.html">
+					<img src="../images/css.png" alt="">
+					<h2>地图</h2>
+					<span>地图</span>
+					<svg width="100%" height="100%">
+						<line x1="0" y1="0" x2="280" y2="0" />
+						<line x1="0" y1="0" x2="0" y2="350" />
+						<line x1="0" y1="350" x2="280" y2="350" />
+						<line x1="280" y1="0" x2="280" y2="350" />
+					</svg>
+				</a>
 			</div>
 		</div>
 	</div>
-	
-
 </body>
 </html>
