@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>balloons</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		html body{
+			width:100%;
+			height:100%;
+		}
+		body{
+			background:#ccc;
+		}
+		.balloon{
+			position:absolute;
+			width:160px;
+			height:160px;
+			background:#faf9f9;
+			border-radius:160px 160px 60px 160px;
+			box-shadow:-8px -8px 80px #873940 inset;
+			transform:rotate(45deg);
+		}
+		.balloon::after{
+			position:absolute;
+			bottom:0;
+			right:0;
+			content:'';
+			width:0;
+			height:0;
+			border:8px solid transparent;
+			border-right-color:#873940;
+			transform:rotate(45deg);
+			border-radius:16px;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		// var num = 10;//初始化气球生成数量
+		var h = window.innerHeight;
+		var w = window.innerWidth;
+		var bh = 160;
+		var timer = null;
+		// alert("气球少于7个,你就输了");
+		init(10);
+		function init(num){  //防止变量的污染
+			for(var i=0;i<num;i++){
+				var oBalloon = document.createElement('div');
+				var randomX = ~~(Math.random()*w)-bh;
+				randomX = Math.max(0,randomX);
+				oBalloon.className = 'balloon';
+				oBalloon.style.top = h - bh + "px";
+				oBalloon.speed = ~~(Math.random()*8) + 1;
+				document.body.appendChild(oBalloon);
+				oBalloon.style.left = randomX + "px";
+			}
+		};
+		timer = setInterval(move,1000/30);
+		 //气球的运动函数
+		move();
+		function move(){ 
+			var aBalloons = document.querySelectorAll('.balloon');
+			for(var i=0,len=aBalloons.length;i<len;i++){
+				console.log(this)
+				aBalloons[i].style.top = aBalloons[i].offsetTop -aBalloons[i].speed + "PX";
+			}
+		};
+		// 事件监听(事件委托)
+		document.body.addEventListener('click',function(e){
+			if(e.target.className.toLowerCase() === 'balloon'){
+				boom.call(e.target,function(){
+					this.parentNode.removeChild(this);
+					init(1);
+				}.bind(e.target));//改变函数内部this指向
+			}
+		});
+		// 气球爆炸函数
+		function boom(cb){
+			// console.log(this)
+			this.timer = setInterval(function(){
+				if(this.offsetWidth<10){
+					cb&&cb();//执行回调函数
+					clearInterval(this.timer);
+				};
+				this.speed ++;
+				this.style.top = this.offsetTop - this.speed + "px";
+				this.style.width = this.offsetWidth - 10 + "px";
+				this.style.height = this.offsetHeight - 10 + "px";
+			}.bind(this),1000/60)
+		}
+	</script>
+</body>
+</html>
+
+<!-- 
+    javaScript
+	基于原型的动态解释性脚本语言
+
+			原型  词法作用域   上下文
+
+			前段能干什么
+				1、响应用户的操作   事件  键盘  鼠标
+				2、操作dom的元素  增删改查   style属性操作
+				3.数据交互  ajax  json jsonp 表单验证  正则表达式
+				4.造轮子  jquery  swiper
+					mv*   react   angular  vue nodeJS(后台)
+
+ -->
+ <!-- 
+ 	需求分析 :
+ 		页面很多气球向上移动   用户点击气球  气球加速向上的同时缩小   左右摇摆  \
+ 		气球做完动画后  消失
+	
+ 		1.JavaScript动态生成 dom的元素  初始化
+			1.生成几个
+			2.如何生成气球   dom生成
+				1.创建
+				2.初始化属性
+				3.添加到body
+			3.气球位置初始化
+				1.x轴位置随机
+					从浏览器 0 - 浏览器宽度随机
+						Math.random() 伪随机数
+							0 - 1 包括0 不包括1
+
+							math.floor 向下取整
+							~~算法取整
+				2.y轴位置top = 浏览器高度
+ 		2.让气球动起来,随机运动速度
+ 			1.获取所有的气球   querySelectorAll
+ 			2.循环改变所有气球top值
+ 				获取当前top offsetTop
+ 			3.定时器改变
+ 				定时器改变
+ 				setInterval
+ 					丢帧现象
+ 				setTimeout
+ 			改变top值
+ 		3.点击气球  气球做动画后消失
+ 			1.点击事件  事件代理
+ 				addEventListener
+ 			2.删除节点
+ 				爸爸干掉儿子
+ 		4.丰富动画效果(爆炸)
+ 			1.被点击的气球  速度++  top改变  width, height减小
+ 			2.回调函数
+
+
+ -->
+
+ <!-- 
+	getElementsByClassName
+	getElementById
+
+	H5  API 元素选择器
+		1.兼容性 IE8  移动端
+		2.用法
+
+	querySelector  获取单一节点元素  默认获取第一个
+
+	querySelectorAll  获取元素节点集合
+
+	setInterva 问题
+
+	指定时间间隔循环触发函数
+	
+	setInterval(function(){
+		//执行  时间
+	},30)
+
+	requestAnimationFrame   H5帧动画
+		requestAnimationFrame(move);
+	    1.无法指定时间间隔 cup
+	    2.兼容性问题
+
+
+	setTimeout   递归调用
+		最稳定  可操控  无兼容性问题
+
+	var i=0;
+	function auto(){
+		i++;
+		console.log(i);
+		timer = setTimeout(arguments.callee,500)
+	}
+	auto();
+
+	addEventListener  事件监听
+
+		定时器  IIFE  window
+
+	var that = this;
+	1.this失去了本来的性质  对象变量 => 变量
+	2.选择用最舒适的方式来开发  不是正确的方法
+
+
+	bind  硬绑定   延迟触发函数使用   强制绑定函数
+	
+	&&  短路
+
+  -->
+
+<!--   
+	编程思维
+		技术栈不够健壮
+			1.不要没有目的
+			初级阶段[变量,函数,对象,方法,属性,数据结构泛型,控制流程,工具类]  看山是山
+
+			进阶[迭代,递归,词法作用域,js引擎解析机制,函数方程式,回调函数,高级函数,参数arguments,闭包,封装,继承,多态,dom高级开发,工具高级应用,矩阵,数组映射,IIFE,解构,ajax,jsondom解析,json,模块化,工程化,组件化,协议对象,上下文,兼容性处理,this,[call,apply,bind],原型,构造器,原型链,包装对象,原始对象,语法糖,正则表达式,定时器高级应用,cookie封装,业务算法,功能组件封装]
+
+			高级[设计模式,算法,数据结构,业务]
+
+		业务  算法  数据  同信
+		IO 
+
+			var aBalloons = document.querySelectorAll('.balloon');
+			获取页面的当中所有类名为.balloon的节点元素,把它存储到aBalloons
+			document对象调用它下面的querySelectorAll(是个函数,方法),传递一个字符串类型的参数,
+			它内部对字符串进行正则匹配.解析,遍历所有dom的节点,获取这个元素dom的映射,然后我们开辟
+			一个内存存储空间aBalloons,它存储一个元素对象的集合,这个集合它有自己的属性叫length(
+			隐藏的属性:不可迭代,不可遍历,不可更改,但是可以读取) 
+
+
+-->
+

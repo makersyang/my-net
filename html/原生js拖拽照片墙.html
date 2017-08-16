@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原生js拖拽照片墙</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#warp{
+			width:680px;
+			height:500px;
+			margin:50px auto;
+		}
+		#warp ul li{
+			list-style:none;
+			float:left;
+			width:200px;
+			height:200px;
+			margin:10px;
+		}
+		#warp ul li img{
+			width:200px;
+			height:200px;
+		}
+	</style>
+</head>
+<body>
+	<div id="warp">
+		<ul >
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+			<li><img src="../images/shuji1.jpg" alt=""></li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="../js/move.js"></script>
+	<script type="text/javascript">
+		var wapr = document.getElementById("warp");
+		var ali = warp.getElementsByTagName("li");
+		var arr=[];
+		var z=1;
+		for(var i=0,len=ali.length;i<len;i++){
+			arr.push([ali[i].offsetLeft,ali[i].offsetTop]);
+			console.log(arr)
+		}
+		for(var i=0,len=ali.length;i<len;i++){
+			ali[i].style.position = "absolute";
+			ali[i].style.left = arr[i][0] + "px";
+			ali[i].style.top = arr[i][1] + "px";
+		}
+		for(var i=0,len=ali.length;i<len;i++){
+			 ali[i].index = i;//全局索引
+			drag(ali[i])
+		}
+		// 鼠标事件
+		function drag(obj){
+			// 鼠标按下
+			obj.onmousedown = function(ev){
+				var ev = ev || window.event;
+				var x = ev.clientX;
+				var y = ev.clientY;
+				var l = obj.offsetLeft;
+				var t = obj.offsetTop;
+				this.style.zIndex = z++;
+				// 鼠标移动
+				document.onmousemove = function(ev){
+					var ev = ev || window.event;
+					var _left = ev.clientX - x + l;
+					var _top = ev.clientY - y +t;
+					var oLi = null;
+					obj.style.left = _left + "px";
+					obj.style.top = _top + "px";
+					for(var i=0,len=ali.length;i<len;i++ ){
+						ali[i].style.border = 0;
+					}
+					oLi = nearli(obj);
+					if(oLi){
+						oLi.style.border = "2px solid red";
+					}
+					
+					// for(var i=0,len=ali.length;i<len;i++){
+					// 	if(impact(obj,ali[i]) && obj!=ali[i]){
+					// 		ali[i].style.border = "2px solid red"
+					// 	}
+					// }
+				}
+				// 鼠标抬起
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					document.onmouseup = null;
+
+					var oLi = nearli(obj);
+					var oIndex = null;
+					if(oLi){
+						move(obj,{left:arr[oLi.index][0],top:arr[oLi.index][1]})//交换位置的动画
+						move(oLi,{left:arr[obj.index][0],top:arr[obj.index][1]})//交换位置的动画
+						oIndex = obj.index;
+						obj.index = oLi.index;
+						oLi.index = oIndex;
+						  //索引交换
+					}else{
+
+					
+						
+					}
+				}
+				return false
+			}
+		}
+		// 碰撞检测
+		function impact(obj1,obj2){
+			var T1 = obj1.offsetTop,
+				L1 = obj1.offsetLeft,
+				B1 = T1 + obj1.offsetHeight,
+				R1 = L1 + obj1.offsetWidth;
+			var T2 = obj2.offsetTop,
+				L2 = obj2.offsetLeft,
+				B2 = T2 + obj2.offsetHeight,
+				R2 = L2 + obj2.offsetWidth;
+			if(B1<T2 || R1<L2 || T1>B2 || L1>R2){
+				// console.log("碰撞不成功") 
+				return false
+			}else{
+				// console.log("碰撞成功")
+				return true
+			}
+		}
+		// 封装勾股函数
+		function distance(obj1,obj2){
+			var a = obj1.offsetLeft - obj2.offsetLeft;
+			var b = obj1.offsetTop - obj2.offsetTop;
+			return Math.sqrt(a*a+b*b)
+		}
+		// 比较判断出距离最小的li 
+		function nearli(obj){
+			var n = 10000000;
+			var oli = '';
+			var c = null;
+			for(var i=0,len=ali.length;i<len;i++){
+				if(impact(obj,ali[i]) && obj!=ali[i]){
+					// ali[i].style.border = "2px solid red"
+					c = distance(obj,ali[i]);
+					if(c<n){
+						n = c;
+						oli = ali[i];
+
+					}
+				}
+			}
+			return oli
+		}
+		// console.log("oli")
+	</script>
+</body>
+</html>

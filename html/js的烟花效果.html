@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding:0;}
+		body{
+			background:#000;
+			overflow:hidden;
+		}
+		.firework{
+			position:absolute;
+			width:10px;
+			height:50px;
+			border-radius:50%;
+			background:red;
+		}
+		.fires{
+			position:absolute;
+			width:8px;
+			height:8px;
+			background:red;
+			border-radius:50%;
+		}
+	</style>	
+</head>
+<body>
+	
+	<script>
+		/*
+		定时器有个BUG，在本窗口下好像没问题，但是在进入另外一个窗口待上一定时间的时候，再进入本窗口是，会有个BUG（动画失帧），自己观察，解决这个问题的方法是请求动画关键帧。
+		 */
+
+		/*面相过程
+			1、鼠标点击documen，底部生成一个子弹
+			2、子弹运动到鼠标点击的后消失，同时生成很多小颗粒
+			3、小颗粒从四面八方去运动
+			4、超过我浏览器的左边、右边、下边就消失
+		*/
+		/*面向对象
+			1、粒子的相同点：构造的方法相同  工厂模型
+			   粒子的不同点：运动的方向  速度  大小  颜色
+		*/  
+		
+		// 谁   做了什么   发生什么(出现什么效果) 
+		document.onclick=function(ev){
+			var ev = ev || window.event;
+			var x = ev.clientX,
+			    y = ev.clientY;
+			var h = window.innerHeight;
+			firework(x,y,h);
+		};
+		function firework(x,y,h){
+			var div=document.createElement('div');
+			var timer = null;
+			var speed = -10;
+			div.className = 'firework';
+			div.style.top = h + 'px';
+			div.style.left = x + 'px';
+			div.style.backgroundColor = color1();
+			document.body.appendChild(div);　
+			timer = setInterval(function(){
+				div.style.top =  div.offsetTop + speed + 'px';
+				if(div.offsetTop<=y){
+					clearInterval(timer);
+					document.body.removeChild(div);
+					fires(x,y,h);
+				}
+			},1000/60)
+		};
+		function fires(x,y,h){
+			var  num = Math.ceil(Math.random()*50)  + 50;
+			var fires = [];
+			for(var i=0;i<num;i++){
+				fires[i] = document.createElement('div');
+				fires[i].className = 'fires';
+				fires[i].style.left = x + 'px';
+				fires[i].style.top = y + 'px';
+				fires[i].style.backgroundColor = color1();
+				fires[i].speedX = Math.random()*20-10;
+				fires[i].speedY = Math.random()*20-10;
+				document.body.appendChild(fires[i]);
+			};
+			setInterval(function(x,y,h){
+				for(var j=0;j<num;j++){
+					fires[j].style.left = fires[j].offsetLeft + fires[j].speedX + 'px';
+					fires[j].style.top = fires[j].offsetTop + fires[j].speedY + 'px';
+					fires[j].speedY +=1;
+					if(fires[j].offsetLeft<0 ||fires[j].offsetLeft>window.innerWidth||fires[j].offsetTop>window.innerHeight){
+						document.body.removeChild(fires[j]);
+					}
+				}
+			},50)
+			
+		
+		};
+		function color1(){
+			var r = Math.floor(Math.random()*255);
+			var g = Math.floor(Math.random()*255);
+			var b = Math.floor(Math.random()*255);
+			return "rgb("+r+","+g+","+b+")";
+		}
+
+	</script>
+</body>
+</html>

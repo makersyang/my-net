@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding:0;}
+		body{
+			overflow:hidden;
+		}
+		#canvas{
+			background:#000;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='canvas'></canvas>
+	<script>
+		//解决定时器的BUG，用请求动画关键帧解决，让运动更顺畅
+		// window.requestAnimationFrame = (function(){
+		// 	return	window.requestAnimationFrame || 
+		// 		window.webkitRequestAnimationFrame ||
+		// 		window.mozRequestAnimationFrame ||
+		// 		window.oRequestAnimationFrame ||
+		// 		window.msRequestAnimationFrame ||
+		// 		function(callback){
+		// 			window.setTimeout(callback,10);
+		// 		}
+		// })();
+		var canvas = document.getElementById('canvas');
+		var ctx =  canvas.getContext('2d');  //设置2D绘图环境
+		canvas.width = window.innerWidth;   //设置画布和浏览器的宽度一样
+		canvas.height = window.innerHeight; //设置画布和浏览器的高度一样
+		canvasW = canvas.width;
+		canvasH = canvas.height;
+		//面向对象过程
+		/*ctx.beginPath();//开始路径
+		fillstyle = 
+		ctx.createRadialGradient(canvasW/2,canvasH/2,20,canvasW/2,canvasH/2,80);
+		fillstyle.addColorStop(0,'#9933cc');
+		fillstyle.addColorStop(0.5,'#9999ff');
+		fillstyle.addColorStop(1,'#234232');
+		ctx.fillStyle = fillstyle;
+		ctx.arc(canvasW/2,canvasH/2,100,0,Math.PI*2,true);
+		// ctx.closePath();
+		ctx.fill();*/
+		// 面向对象：是设计模型，写一类相同的事物
+		      // 粒子的不同点：位置,颜色不同；构造函数||工厂模式
+		      // 粒子的相同点：绘制的方法是一样的---原型
+		      // 构造函数以及原型的里面的this指向new出来的对象
+		// 
+		var particalBackGround='rgba(0,0,0,0.01)',
+			colorSet=[
+			'Aqua',
+			'BlueViolet',
+			'CornflowerBlue',
+			'DeepPink',
+			'Gold',
+			'SpringGreen',
+			'Tomato',
+			]
+		function Particle(){  //构造函数||工厂模式
+			// 粒子的初始位置
+			this.x = randomMax(canvasW);
+			this.y = randomMax(canvasH);
+			this.r = randomMax(60);
+			this.color = colorSet[Math.floor(Math.random() * colorSet.length)];
+			this.dx = -5 +randomMax(10); //移动的随机值
+			this.dy = -5 +randomMax(10);
+		}
+		Particle.prototype.draw = function(){   //构造函数的原型
+
+			this.x += this.dx;
+			this.y += this.dy;
+			if(this.x<0 || this.y>canvasH || this.x>canvasW ||this.y<0 || (this.dx === 0 && this.dy === 0)){
+				this.x = randomMax(canvasW);
+				this.y = randomMax(canvasH);
+				this.dx = -5 +randomMax(10); 
+				this.dy = -5 +randomMax(10);
+			}
+			ctx.beginPath();//开始路径
+			fillstyle = 
+			ctx.createRadialGradient(this.x,this.y,20,this.x,this.y,80);
+			fillstyle.addColorStop(0,this.color);
+			// fillstyle.addColorStop(0.5,'#9999ff');
+			fillstyle.addColorStop(1,particalBackGround);
+			ctx.fillStyle = fillstyle;
+			ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);
+			// ctx.closePath();
+			ctx.fill();
+		}
+		// 创建单个
+		// var particleSystem = new Particle();
+		// particleSystem.draw();
+		
+		// 创建60个
+		var particles = [];
+		for(var i=0;i<60;i++){
+			particles.push(new Particle());
+			
+		}
+		// console.log(particles)
+		for(var i=0;i<particles.length;i++){
+			particles[i].draw();
+			
+		}
+		function loop(){
+			ctx.clearRect(0,0,canvasW,canvasH);
+			ctx.globalCompositeOperation = "lighter"
+			requestAnimationFrame(loop);
+			for(var i=0;i<particles.length;i++){
+			particles[i].draw();
+			
+			}
+		};
+		loop();
+		
+		//随机位置
+		function randomMax(max){
+			return Math.floor(Math.random() * max);
+		}
+
+	</script>
+</body>
+</html>

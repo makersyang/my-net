@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		#canvas{
+			display:block;
+		}
+		body{
+			overflow-x:hidden;
+		}
+		.warp{
+			position:relative;
+			width:1200px;
+			height:550px;
+			border:2px solid #ccc;
+			border-radius:6px;
+			margin:10px auto 0 auto;
+		}
+		.expect{
+			display:block;
+			width:1180px;
+			margin:10px;
+			font-size:16px;
+			text-indent:32px;
+		}
+		.warp div:nth-of-type(1),.warp div:nth-of-type(2){
+			position:absolute;
+			top:80px;
+			width:580px;
+			height:460px;
+			overflow-y:yes;
+			overflow-y :auto;
+			background:#ccc;
+			color:#000;
+		}
+		.warp div:nth-of-type(1){
+			left:4px;
+		}
+		.warp div:nth-of-type(2){
+			right:4px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<div class="warp">
+		<span class="expect">此特效运用哦了H5中的画布（canvas），很多的人在写特效的时候，直接就敲代码。然后敲到一部分的时候，不知道要怎么做了，思维卡死了，无从下手。有经验的开发人员他会先写一个需求分析（业务罗辑思维），首先知道主题是谁，然后做了什么事情，结果怎么样;把每一步需求都写好了，那么敲代码的时候就事半功倍了。大到一个项目，小到一个特效，都要有事先写需求分析，这是我个人的看法，赞成我的或者喜欢我的可以加下我的QQ号：1011671463
+		</span>
+		<div>
+			CSS样式部分
+			*{<br/>
+			margin:0;<br/>
+			padding:0;<br/>
+		}<br/>
+		#canvas{<br/>
+			display:block;<br/>
+		}<br/>
+		body{<br/>
+			overflow-x:hidden;<br/>
+		}<br/>
+		.warp{<br/>
+			position:relative;<br/>
+			width:1200px;<br/>
+			height:550px;<br/>
+			border:2px solid #ccc;<br/>
+			border-radius:6px;<br/>
+			margin:10px auto 0 auto;<br/>
+		}<br/>
+		.expect{<br/>
+			display:block;<br/>
+			width:1180px;<br/>
+			margin:10px;<br/>
+			font-size:16px;<br/>
+			text-indent:32px;<br/>
+		}<br/>
+		.warp div:nth-of-type(1){<br/>
+			position:absolute;<br/>
+			top:80px;<br/>
+			left:4px;<br/>
+			width:580px;<br/>
+			height:460px;<br/>
+			background-size:100% 100%;<br/>
+		}<br/>
+		.warp div:nth-of-type(2){<br/>
+			position:absolute;<br/>
+			top:80px;<br/>
+			right:4px;<br/>
+			width:580px;<br/>
+			height:460px;<br/>
+			background-size:100% 100%;<br/>
+		}<br/>
+		</div>
+		<div>
+			JS部分<br/>
+			var canvas = document.getElementById('canvas'),<br/>
+			ctx = canvas.getContext('2d'),<br/>
+			w = canvas.width = window.innerWidth,<br/>
+			h = canvas.height = window.innerHeight,<br/>
+			hue = 217,<br/>
+			stars = [],<br/>
+			count = 0,<br/>
+			maxStars = 1200;<br/>
+			window.onresize = function(){<br/>
+				w = canvas.width = window.innerWidth;<br/>
+				h = canvas.height = window.innerHeight;<br/>
+			}<br/>
+			var canvas2 = document.createElement('canvas'),<br/>
+			ctx2 = canvas2.getContext('2d');<br/>
+			canvas2.width = 100;<br/>
+			canvas2.height = 100;<br/>
+			var half = canvas2.width / 2,<br/>
+			gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);<br/>
+			gradient2.addColorStop(0.025, '#fff');<br/>
+			gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');<br/>
+			gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');<br/>
+			gradient2.addColorStop(1, 'transparent');<br/>
+			ctx2.fillStyle = gradient2;<br/>
+			ctx2.beginPath();<br/>
+			ctx2.arc(half, half, half, 0, Math.PI * 2);<br/>
+			ctx2.fill();<br/>
+			function random(min, max) {<br/>
+			  if (arguments.length < 2) {<br/>
+				max = min;<br/>
+				min = 0;<br/>
+			  }<br/>
+			  if (min > max) {<br/>
+				var hold = max;<br/>
+				max = min;<br/>
+				min = hold;<br/>
+			  }<br/>
+			  return Math.floor(Math.random() * (max - min + 1)) + min;<br/>
+			}<br/>
+			function maxOrbit(x, y) {<br/>
+			  var max = Math.max(x, y),<br/>
+				diameter = Math.round(Math.sqrt(max * max + max * max));<br/>
+			  return diameter / 2;<br/>
+			}<br/>
+			var Star = function() {<br/>
+			  this.orbitRadius = random(maxOrbit(w, h));<br/>
+			  this.radius = random(60, this.orbitRadius) / 12;<br/>
+			  this.orbitX = w / 2;<br/>
+			  this.orbitY = h / 2;<br/>
+			  this.timePassed = random(0, maxStars);<br/>
+			  this.speed = random(this.orbitRadius) / 900000;<br/>
+			  this.alpha = random(2, 10) / 10;<br/>
+			  count++;<br/>
+			  stars[count] = this;<br/>
+			}<br/>
+			Star.prototype.draw = function() {<br/>
+			  var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,<br/>
+				y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,<br/>
+				twinkle = random(10);<br/>
+			  if (twinkle === 1 && this.alpha > 0) {<br/>
+				this.alpha -= 0.05;<br/>
+			  } else if (twinkle === 2 && this.alpha < 1) {<br/>
+				this.alpha += 0.05;<br/>
+			  }<br/>
+			  ctx.globalAlpha = this.alpha;<br/>
+			  ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);<br/>
+			  this.timePassed += this.speed;<br/>
+			}<br/>
+			for (var i = 0; i < maxStars; i++) {<br/>
+			  new Star();<br/>
+			}<br/>
+			function animation() {<br/>
+			  ctx.globalCompositeOperation = 'source-over';<br/>
+			  ctx.globalAlpha = 0.8;<br/>
+			  ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 1)';<br/>
+			  ctx.fillRect(0, 0, w, h)<br/>
+			  ctx.globalCompositeOperation = 'lighter';<br/>
+			  for (var i = 1, l = stars.length; i < l; i++) {<br/>
+				stars[i].draw();<br/>
+			  };<br/>
+			  window.requestAnimationFrame(animation);<br/>
+			}<br/>
+			animation();<br/>
+		</div>
+	</div>
+	<script>
+		
+			var canvas = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d'),
+			w = canvas.width = window.innerWidth,
+			h = canvas.height = window.innerHeight,
+			hue = 217,
+			stars = [],
+			count = 0,
+			maxStars = 1200;
+			window.onresize = function(){
+				w = canvas.width = window.innerWidth;
+				h = canvas.height = window.innerHeight;
+			}
+			var canvas2 = document.createElement('canvas'),
+			ctx2 = canvas2.getContext('2d');
+			canvas2.width = 100;
+			canvas2.height = 100;
+			var half = canvas2.width / 2,
+			gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+			gradient2.addColorStop(0.025, '#fff');
+			gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+			gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+			gradient2.addColorStop(1, 'transparent');
+			ctx2.fillStyle = gradient2;
+			ctx2.beginPath();
+			ctx2.arc(half, half, half, 0, Math.PI * 2);
+			ctx2.fill();
+			function random(min, max) {
+			  if (arguments.length < 2) {
+				max = min;
+				min = 0;
+			  }
+			  if (min > max) {
+				var hold = max;
+				max = min;
+				min = hold;
+			  }
+			  return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+			function maxOrbit(x, y) {
+			  var max = Math.max(x, y),
+				diameter = Math.round(Math.sqrt(max * max + max * max));
+			  return diameter / 2;
+			}
+			var Star = function() {
+			  this.orbitRadius = random(maxOrbit(w, h));
+			  this.radius = random(60, this.orbitRadius) / 12;
+			  this.orbitX = w / 2;
+			  this.orbitY = h / 2;
+			  this.timePassed = random(0, maxStars);
+			  this.speed = random(this.orbitRadius) / 900000;
+			  this.alpha = random(2, 10) / 10;
+			  count++;
+			  stars[count] = this;
+			}
+			Star.prototype.draw = function() {
+			  var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+				y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+				twinkle = random(10);
+			  if (twinkle === 1 && this.alpha > 0) {
+				this.alpha -= 0.05;
+			  } else if (twinkle === 2 && this.alpha < 1) {
+				this.alpha += 0.05;
+			  }
+			  ctx.globalAlpha = this.alpha;
+			  ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+			  this.timePassed += this.speed;
+			}
+			for (var i = 0; i < maxStars; i++) {
+			  new Star();
+			}
+			function animation() {
+			  ctx.globalCompositeOperation = 'source-over';
+			  ctx.globalAlpha = 0.8;
+			  ctx.fillStyle = 'hsla(' + hue + ', 64%, 6%, 1)';
+			  ctx.fillRect(0, 0, w, h)
+			  ctx.globalCompositeOperation = 'lighter';
+			  for (var i = 1, l = stars.length; i < l; i++) {
+				stars[i].draw();
+			  };
+			  window.requestAnimationFrame(animation);
+			}
+			animation();
+	</script>
+</body>
+</html>

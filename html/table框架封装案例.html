@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>table框架封装案例</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#win{
+			width:800px;
+			border:1px solid #000;
+			margin:50px auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="win"></div>
+	<script src="../js/table.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	/*
+		需求分析:
+			给开发者开发一个框架,利用此框架,开发者通过简单的代码就可以创建出表格
+	 */
+		var win = document.getElementById("win")
+		var table = new Table(win);//创建一个table
+		table.createTable({
+				col:3,//行数
+				row:10//列数
+		});
+		
+		// table.delTable();
+	</script>
+</body>
+</html>

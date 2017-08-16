@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>贪吃蛇游戏</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#canvas{
+			display:block;
+			margin:100px auto 0;
+			border:4px solid lightgreen;
+			background:#fff;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<canvas id="canvas" width="500" height="500">您的浏览器不支持canvas，请您更换其它浏览器</canvas>
+		<div id="score"></div>
+	</div>
+	<script type="text/javascript">
+		var can = document.getElementById("canvas");
+		var ctx = can.getContext('2d');
+		var r = [{x:10,y:9},{x:10,y:8}];
+		var co = 40;//表示前进的方向
+		var n = null;
+		var stop = false;
+
+		ctx.shadowBlur = 20;
+		ctx.shadowColor = "black";
+		function onframe(){
+			if( r[0].x<0 || r[0].x>=50 || r[0].y<0 || r[0].y>=50 || stop)   return;
+			
+			//有粒子，则判断是否吃到粒子，吃到了将蛇数组中最后一个元素换到首部
+			if(n){
+				if((co == 40 && r[0].x == n.x && r[0].y+1 == n.y) 
+					|| (co == 38 && r[0].x == n.x && r[0].y-1 == n.y)
+					|| (co == 37 && r[0].x-1 == n.x && r[0].y == n.y)
+					|| (co == 39 && r[0].x+1 == n.x && r[0].y == n.y)){
+					r.unshift(n);
+					n = null;
+				}
+			}
+			//数组中的最后一个元素换到首部
+			r.unshift(r.pop());
+			//根据方向，重新设定蛇数组元素的坐标，从而移动
+			switch(co){
+				case 37:
+					r[0].x = r[1].x-1;
+					r[0].y = r[1].y;
+					break;
+				case 38:
+					r[0].x = r[1].x;
+					r[0].y = r[1].y-1;
+					break;
+				case 39:
+					r[0].x = r[1].x+1;
+					r[0].y = r[1].y;
+					break;
+				case 40:
+					r[0].x = r[1].x;
+					r[0].y = r[1].y+1;
+					break;
+			}
+			//贪吃蛇移动
+			ctx.clearRect(0,0,500,500);
+			for(var i=0;i<r.length;i++){
+				ctx.fillRect(r[i].x*10,r[i].y*10,10,10)
+			}
+			//如果没有粒子，则在随机位置上加上一个粒子
+			if(n == null){
+				n = {x:~~(Math.random()*50),y:~~(Math.random()*50)}
+			}
+			//如果有粒子，则绘制一个粒子
+			if(n){
+				ctx.fillRect(n.x*10,n.y*10,10,10)
+			}
+			//碰撞检测，碰到游戏就结束
+			if(r[0].x<0 || r[0].x>=50 || r[0].y<0 || r[0].y>=50){
+				alert("Game over\n真是完蛋才得"+(r.length-2)+"分");
+			}
+		}
+		setInterval(onframe,100);
+
+
+		//键盘事件
+		document.onkeyup = function(ev){
+			var ev = ev || window.event;
+			// var a = ev.keyCode;
+			// console.log(a);
+			if(ev.keyCode >= 37 && ev.keyCode <= 40 && Math.abs(ev.keyCode-co != 2)){
+				co = ev.keyCode;
+			}else if(ev.keyCode == 32){
+				stop != stop;
+			}
+		}
+	</script>
+</body>
+</html>

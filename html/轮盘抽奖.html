@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery商城抽奖</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background:#cc3333;
+			overflow:hidden;
+		}
+		#rotate{
+			position:relative;
+			width:854px;
+			height:504px;
+			background:url(../images/bg1.png);
+			margin:50px auto;
+		}
+		.rotateArrow{
+			position:absolute;
+			top:103px;
+			left:181px;
+			width:294px;
+			height:294px;
+			background:url("../images/arrow.png");
+		}
+		.user{
+			position:absolute;
+			overflow:hidden;
+			right:39px;
+			top:140px;
+			width:140px;
+			height:330px;
+		}
+		.user ul{
+			position:relative;
+			top:0;
+		}
+		.user ul li{
+			list-style:none;
+			background:url("../images/user.png") no-repeat;
+			background-position:0px 11px;
+			/*vertical-align:middle;图文垂直对齐方式*/
+			line-height:37px;
+			color:#ffcc33;
+			text-indent:25px;
+		}
+		.result{
+			display:none;
+			position:absolute;
+			top:190px;
+			left:128px;
+			width:400px;
+			height:120px;
+			background:rgba(0,0,0,0.7);
+		}
+		.result p{
+			color:#fff;
+			text-align:center;
+			line-height:120px;
+		}
+		.result a{
+			position:absolute;
+			right:0;
+			top:0;
+			width:24px;
+			height:24px;
+			background:url("../images/close.png");
+		}
+	</style>
+</head>
+<body>
+	<div id="rotate">
+		<div class="rotateArrow"></div>
+		<div class="user">
+			<ul>
+				<li>1365*****883</li>
+				<li>1347*****561</li>
+				<li>1581*****643</li>
+				<li>1315*****485</li>
+				<li>1864*****822</li>
+				<li>1322*****112</li>
+				<li>1365*****463</li>
+				<li>1257*****203</li>
+				<li>1345*****876</li>
+				<li>1574*****089</li>
+				<li>1365*****641</li>
+				<li>1432*****730</li>
+				<li>1576*****079</li>
+			</ul>
+		</div>
+		<div class='result'>
+			<p>谢谢参与！！！</p>
+			<a href="javascript:;"></a><!-- 阻止页面跳转-->
+		</div>
+	</div>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery.rotate.min.js"></script>
+	<script>
+		//  什么元素  触发什么事件  实现什么效果
+		var $this; 
+		$(".rotateArrow").click(function(){
+			//随机旋转的角度
+			var n = Math.floor(Math.random()*8);
+			$this = $(this);
+			switch(n){//循环函数
+				case 0:
+					rotateFun(0,"谢谢参与！！");
+					break;
+				case 1:
+					rotateFun(45,"恭喜你获得了5元代金券");
+					break;
+				case 2:
+					rotateFun(90,"恭喜你获得了1元代金券");
+					break;
+				case 3:
+					rotateFun(135,"恭喜你获得了10元代金券");
+					break;
+				case 4:
+					rotateFun(180,"谢谢参与！！");
+					break;
+				case 5:
+					rotateFun(225,"恭喜你获得了20元代金券");
+					break;
+				case 6:
+					rotateFun(180,"谢谢参与！！");
+					break;
+				case 7:
+					rotateFun(315,"恭喜你获得了30元代金券");
+					break;
+			}
+			// rotateFun(45,"恭喜你获得了5元代金券")
+			// 点击实现旋转功能
+		})
+		function rotateFun(angle,rel){
+			// angle(旋转的角度指向) rel(显示结果)
+			$this.rotate({
+				angle:0,
+				duration:5000,
+				animateTo:angle + 1440,
+				callback:function(){//当动画执行完再执行什么事件（回调函数）
+					$(".result p").html(rel);
+					$(".result").show();
+				}
+			})
+
+		}
+		$(".result a").click(function(){
+			$(".result").hide();
+		})
+
+		// 滚动用户名
+		setInterval(function(){
+			$(".user ul").animate({"top":"-37px"},800,function(){
+				// 当动画完成在执行什么动画
+				$(this).append($(".user ul li:first"));
+				$(this).css("top",0);
+			});
+		},1000)
+	</script>
+</body>
+</html>

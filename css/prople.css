@@ -1,0 +1,312 @@
+*{
+	margin:0;
+	padding:0;
+}
+html,body,.warp{
+	width:100%;
+	height:100%;
+	font-family:"微软雅黑";
+	background:#f1f1f1;
+}
+body{
+	overflow-x: hidden;
+}
+ul li{
+	list-style:none;
+}
+span{
+	color:#dbdcdd;
+}
+/*-----------------------顶部导航条样式开始-----------------*/
+.header-nav{
+	position:absolute;
+	top:73px;
+	left:0;
+	width:100%;
+	height:50px;
+	background:#48434d;
+	opacity:.8;
+	transition:0.4s;
+	z-index:1000;
+}
+.header-nav-box{
+	width:1300px;
+	height:50px;
+	margin:0 auto;
+}
+.header-nav-box ul{
+	display: flex;
+   	flex-direction: row;
+  	flex-wrap: wrap;
+  	justify-content:space-between;
+  	width:100%;
+  	height:100%;
+}
+.header-nav-box ul li{
+	/*position:relative;*/
+	float:left;
+	position:relative;
+	width:185.7px;
+	height:50px;
+	line-height:50px;
+	text-align:center;/*
+	background:url("images/shouye-copy1.png");*/
+}
+.header-nav-box ul li a{
+	display:block;
+	width:100%;
+	height:100%;
+	text-align:center;
+	text-decoration:none;
+	line-height:50px;
+	color:#f9f9f9;
+}
+
+.system,.rule,.effects,.case,.introduction{
+	position:absolute;
+	top:50px;
+	left:92.85px;
+	height:0px;
+	width:0px;
+	transition:.4s;
+	overflow:hidden;
+}
+/*导航hover事件开始*/
+.header-nav-box ul li:hover{
+	background:#bfbfbf;
+}
+.header-nav-box ul li:hover .system{
+	left:0;
+	width:185.7px;
+	height:300px;
+	background:#808080;
+}
+.header-nav-box ul li:hover .rule{
+	left:0;
+	width:185.7px;
+	height:250px;
+	background:#808080;
+}
+.header-nav-box ul li:hover .effects{
+	left:0;
+	width:185.7px;
+	height:250px;
+	background:#808080;
+}
+.header-nav-box ul li:hover .case{
+	left:0;
+	width:185.7px;
+	height:150px;
+	background:#808080;
+}
+.header-nav-box ul li:hover .introduction{
+	left:0;
+	width:185.7px;
+	height:250px;
+	background:#808080;
+}
+.header-nav-box ul li:hover a{
+	color:#6347ed;
+}
+.son>li>a{
+	text-indent:-20px;
+	transition:.4s;
+	color:#ffffff !important;
+}
+.son>li:last-child{
+	margin:0;
+	padding:0;
+}
+.son>li>a:hover{
+	text-indent:0px;
+	font-size:14px;
+	color:#48434d;
+}
+.my_weixin{
+	position:absolute;
+	top:50px;
+	left:-40px;
+	width:260px;
+	height:260px;
+	background:url("../images/my_weixin.png");
+	display:none;
+}
+.weixin:hover .my_weixin{
+	display:block;
+}
+/*导航hover事件结束*/
+
+/*-----------------------顶部导航条样式结束-----------------*/
+
+/*---------------子页面中的广告案例   开始-----------------*/
+.content-right{
+	float:right;
+	width:300px;
+	height:400px;
+	margin-top:20px;
+	
+}
+.web{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content:space-between;
+	width:100%;
+	height:200px;
+	border-radius:6px;
+	box-shadow:0px 5px 5px #000;
+}
+.web:hover,.ad:hover{
+	box-shadow:0px 0px 5px #000;
+}
+.web li{
+	width:120px;
+	height:26px;
+	line-height:26px;
+	border-radius:6px;
+	text-align:center;
+	margin:10px;
+	border:1px solid #000;
+}
+.web li a{
+	display:block;
+	width:100%;
+	height:100%;
+	text-decoration:none;
+	color:#000;
+}
+.web li:hover{
+	background:#ccc;
+}
+.ad{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content:space-between;
+	width:100%;
+	margin-top:20px;
+	border-radius:6px;
+	box-shadow:0px 5px 5px #000;
+	text-indent:10px;
+	font-size:20px;
+	line-height:26px;
+}
+.ad li{
+	width:100%;
+	line-height:24px;
+	font-size:16px;
+	/*background:lime;*/
+}
+.ad li:hover{
+	background:#ccc;
+}
+.ad li a{
+	display:block;
+	width:100%;
+	height:100%;
+	line-height:24px;
+	text-decoration:none;
+	color:black;
+}
+.ad li a:hover{
+	color:red;
+}
+.content-left2{
+	float:left;
+	width:860px;
+	height:400;
+}
+/*---------------子页面中的广告案例   结束-----------------*/
+
+
+
+/*------------笔记1的样式表开始---------*/
+.content{
+	position:relative;
+	top:130px;
+	width:1200px;
+	margin:0 auto 0;
+}
+.content>h5{
+	line-height:30px;
+}
+.content .notes-content-left{
+	float:left;
+	width:200px;
+	margin-top:20px;
+}
+.list-notes{
+	width:100%;
+	border-radius:6px;
+	box-shadow:0 0 5px #000;
+}
+.list-notes h4{
+	line-height:30px;
+	text-indent:6px;
+}
+.list-notes li{
+	width:100%;
+	font-size:16px;
+}
+.list-notes li a{
+	display:block;
+	width:100%;
+	line-height:34px;
+	text-indent:4px;
+	text-decoration:none;
+	color:#000;
+}
+.list-notes li a:hover{
+	color:#17a6e8;
+
+}
+.content .notes-content-right{
+	float:left;
+	width:980px;
+	margin:20px 0 0 20px;
+	border-radius:6px;
+	box-shadow:0 0 5px #000;
+}
+.content-first{
+	float:left;
+	padding:10px 10px;
+	width:260px;
+	height:330px;
+	margin:0px 20px 14px 20px;
+}
+.content-first a{
+	position:relative;
+	display:block;
+	width:280px;
+	height:350px;
+	text-decoration: none;
+}
+.content-first img{
+	width:100%;
+	height:150px;
+}
+.content-first a h2 {display:block;text-indent:20px;text-decoration:none;font-size:16px;line-height:30px;color:#000;z-index:10;}
+.content-first a:hover h2{color:#16C0F8;}
+.content-first  span{
+	display:block;
+	font-size:14px;
+	text-indent:14px;
+	color:#000;
+}
+.content-first svg{
+	position:absolute;
+	top:0;
+	left:0;
+}
+.content-first a svg line{
+	stroke-width:4;
+	stroke:#abcdef;
+	transition:.7s;
+}
+.content-first a svg:hover line{
+	stroke-width:10;
+	stroke-dasharray:33,24;
+}
+
+
+/*------------笔记1的样式表开始---------*/

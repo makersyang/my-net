@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{background:#000000;}
+	</style>
+</head>
+<body>
+	<script>
+		function color1(){
+			var colors = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];     
+			var c = '';
+			for(var i=0; i<6; i++){
+			    var n = parseInt( Math.random()*15 );
+			    c += colors[n];
+			}
+			return '#' + c;
+		}
+		setInterval(function(){
+			document.body.style.background = color1();
+
+		},1000)
+	</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css3中的hover事件</title>
+	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+	<style>
+		body,ul,li{
+			margin:0;
+			padding:0;
+		}
+		li{list-style:none;}
+		#module-first{
+			width:1250px;
+			height:800px;
+			margin:10px auto 0;
+		}
+		.tit-hover{
+			width:100%;
+			line-height:30px;
+			text-align:center;
+		}
+		#left{
+			float:left;
+			width:200px;
+			height:800px;
+		}
+		#left ul li{
+			width:198;
+			height:98px;
+			border:1px solid #abcdef;
+			/*background:url("../images/close.png");*/
+			/*background-position:0px 20px;*/
+			/*vertical-align:middle;图文垂直对齐方式*/
+			vertical-align:middle;
+			text-align:center;
+			line-height:98px;
+			background:#434420;
+			cursor:pointer;
+		}
+		#left ul .hover{
+			background-color:#16C0F8;
+		}
+		#left ul li img{
+			position:absolute;
+		}
+		#right{
+			float:left;
+			width:960px;
+			height:760px;
+			padding:20px;
+			margin-left:20px;
+			border-radius:6px;
+			box-shadow:0 0 5px #000;
+		}
+		#right .content{
+			display:none;
+			width:100%;
+			height:100%;
+		}
+		#right div img{
+			width:100%;
+			height:100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="module-first">
+		<h1 class="tit-hover">css3中的hover事件</h1>
+		<div id="left">
+			<ul>
+				<li class="hover">虾米音乐</li>
+				<li>豆瓣音乐</li>
+				<li>都市之声</li>
+				<li>网易云音乐</li>
+				<li>酷狗音乐</li>
+				<li>音悦台</li>
+				<li>多米音乐</li>
+				<li>酷我音乐</li>
+			</ul>
+		</div>
+		<div id="right">
+			<div class="content xiami-music" style="display:block"><img src="../images/xiami-music.png" alt=""></div>
+			<div class="content douban-music"><img src="../images/douban-music.png" alt=""></div>
+			<div class="content city-voices"><img src="../images/city-voices.png" alt=""></div>
+			<div class="content wangyi-music"><img src="../images/wangyi-music.png" alt=""></div>
+			<div class="content kugou-music"><img src="../images/kugou-music.png" alt=""></div>
+			<div class="content musical"><img src="../images/musical.png" alt=""></div>
+			<div class="content doumi-music"><img src="../images/doumi-music.png" alt=""></div>
+			<div class="content kuwo-music"><img src="../images/kuwo-music.png" alt=""></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$("#left ul li").hover(function(){
+			var index = $(this).index();
+			$(this).addClass("hover").siblings().removeClass("hover");
+			$("#right .content").eq(index).show().siblings().hide();
+		})
+	</script>
+</body>
+	

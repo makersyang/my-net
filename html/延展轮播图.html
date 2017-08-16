@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background:gray;
+		}
+		ul li{
+			list-style:none;
+		}
+		.box{
+			width:1200px;
+			height:300px;
+			border:2px solid red;
+			margin:100px auto;
+			overflow:hidden;
+		}
+		.box1{
+			width:10000px;
+			height:100%;
+			background:white;
+		}
+		.box1 ul{
+			display:flex;
+			flex-direction:row;
+			justify-content:space-buttom;
+			align-items:center;
+		}
+		.box1 ul li{
+			width:280px;
+			height:280px;
+			margin:10px;
+		}
+		.box1 ul li:nth-of-type(1){
+			background:url("../images/timg1.jpg");
+		}
+		.box1 ul li:nth-of-type(2){
+			background:url("../images/timg2.jpg");
+		}
+		.box1 ul li:nth-of-type(3){
+			background:url("../images/timg3.jpg");
+		}
+		.box1 ul li:nth-of-type(4){
+			background:url("../images/timg5.jpg");
+		}
+		.box1 ul:hover li{
+			width:200px;
+		}
+		.box1 ul li:hover{
+			width:540px;
+			background-size:100% 100%;
+			transition:.4s cubic-bezier(.11,.87,.9,1.27);
+		}
+	</style>	
+</head>
+<body>
+	<div class='box'>
+		<div class="box1">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

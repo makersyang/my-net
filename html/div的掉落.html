@@ -1,0 +1,95 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<form action="/demo/demo_form.asp">
+		First name:<br>
+		<input type="text" value="Mickey">
+		<br>
+		Last name:<br>
+		<input type="text" name="lastname" value="Mouse">
+		<br><br>
+		<input type="submit" value="Submit">
+		<input type="file">
+	</form> 
+
+	<p>如果您点击提交，表单数据会被发送到名为 demo_form.asp 的页面。</p>
+
+	<p>first name 不会被提交，因为此 input 元素没有 name 属性。</p>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>div的掉落</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			overflow:hidden;
+		}
+		.warp{
+			position:absolute;
+			width:100px;
+			height:100px;
+			background:#489502;
+			border-radius:50%;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		window.onresize = function(){}
+		var w = window.innerWidth,
+			h = window.innerHeight;
+		var bh = 100;
+		var timer =null;
+		// 生成div的函数
+		init(10);
+		function init(num){
+			for(var i=0;i<num;i++){
+				var odiv = document.createElement('div');
+				odiv.className = 'warp';
+				odiv.style.top = h - bh + "px";
+				odiv.style.left = 0 + "px";
+				odiv.style.backgroundColor = color1();
+				document.body.appendChild(odiv);
+				odiv.speed = 4;
+			}
+		}
+		// 定时器
+		timer = setInterval(run,1000/60)
+		//div运动的函数
+		run();
+		function run(){
+			var adiv = document.querySelectorAll('.warp');
+			for(var i=0,len=adiv.length;i<len;i++){
+				// console.log(len)
+				adiv[i].style.top = adiv[i].offsetTop - adiv[i].speed + "px";
+				adiv[i].style.left = i*120 + "px";
+				// console.log(adiv[i].style.left)
+				// console.log(1111)
+				if(adiv[i].offsetTop<=0 || adiv[i].offsetTop>(h-bh)){
+					adiv[i].speed = -adiv[i].speed;
+					adiv[i].style.backgroundColor = color1();
+				}
+			}
+		}
+		// 随机颜色
+		function color1(){
+			var r =(Math.random()*256)>>>0;
+			var g =(Math.random()*256)>>>0;
+			var b = (Math.random()*256)>>>0;
+			return "rgb("+r+","+g+","+b+")"
+		}
+	</script>
+</body>
+</html>
